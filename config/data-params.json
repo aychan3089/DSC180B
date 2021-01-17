@@ -1,1 +1,6 @@
-{}
+{
+    "scientific" : ["BernieSanders", "RepKatiePorter"], 
+    "misinformation" : ["mtgreenee"],
+    "startDate" : "20/03/13",
+    "endDate" : "21/01/14"
+}
