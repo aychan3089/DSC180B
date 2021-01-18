@@ -1,6 +1,6 @@
 {
-    "scientific" : ["BernieSanders"], 
-    "misinformation" : ["tedcruz", "mtgreene"],
+    "scientific" : ["BernieSanders", "RepKatiePorter", "SenatorRomney", "staceyabrams", "RepAdamSchiff", "AOC", "lisamurkowski", "tedlieu", "CaptMarkKelly", "RepUnderwood"], 
+    "misinformation" : ["mtgreenee", "laurenboebert", "SenJoniErnst", "TulsiGabbard", "HawleyMO", "tedcruz", "RepAndyBiggsAZ", "Jim_Jordan", "mattgaetz"],
     "control_filepath" : "src/data/politicians.txt", 
     "startDate" : "20/03/13",
     "endDate" : "21/01/14"
