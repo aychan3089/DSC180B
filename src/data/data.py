@@ -9,6 +9,7 @@ import time
 import datetime
 import numpy as np
 import os
+import json
 
 def get_tweets(politician_list, group_name, startDate, endDate):
     
@@ -71,7 +72,7 @@ def get_tweets(politician_list, group_name, startDate, endDate):
                 os.mkdir(folder)
                 with open(file, 'w') as f:
                     for item in tweets:
-                        f.write("%s\n" % item._json)
+                        f.write("%s\n" % json.dumps(item._json))
 
                 print("The data for " + politician_list[i] + " has been obtained")
 
