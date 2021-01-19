@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# ignore data folder 
+src/data/
+
+# ignore notebooks 
+notebooks/
