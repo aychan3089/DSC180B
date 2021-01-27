@@ -4,7 +4,7 @@ import json
 
 sys.path.insert(0, 'src/data')
 
-from data import lists
+from data import get_data
 
 def main(targets):
 
