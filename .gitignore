@@ -1,3 +1,7 @@
+#Ignore file containing API keys and misc. files
+config.py
+.DS_store
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
