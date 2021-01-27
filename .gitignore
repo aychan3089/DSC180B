@@ -1,4 +1,4 @@
-#Ignore file containing API keys
+#Ignore file containing API keys and misc. files
 config.py
 .DS_store
 
