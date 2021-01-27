@@ -1,1 +1,4 @@
-{}
+{
+    "scientific_path" : "/src/data/scientific",
+    "misinformation_path" : "/src/data/misinformation"
+}
