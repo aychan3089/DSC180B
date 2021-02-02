@@ -29,6 +29,6 @@ def rehydrate(directory_path):
     #Changes the directory to the original path
     os.chdir(cwd)
         
-def get_data(scientific_path, misinformation_path):
+def get_data(scientific_path, misinformation_path, scientific_list, misinformation_list):
     rehydrate(scientific_path)
     rehydrate(misinformation_path)
