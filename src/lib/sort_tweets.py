@@ -25,6 +25,9 @@ def sort_files(path):
             
             tweets.sort(key=date_to_datetime)
             
+            if not os.path.exists(os.path.join(subdir, 'sorted')):
+                os.makedirs(os.path.join(subdir, 'sorted'))
+            
             outpath = os.path.join(subdir, 'sorted', file)
             with open(outpath, 'w+', encoding='utf-8') as f:
                 for t in tweets:

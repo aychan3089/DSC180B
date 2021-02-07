@@ -89,7 +89,7 @@ def cumu_likes_over_months(path):
     
     return cumu_likes_over_time
 
-def count_likes_over_tweets(path):
+def count_likes_gover_tweets(path):
     likes_per_tweet = {}
     
     for subdir, dis, files in os.walk(path):
