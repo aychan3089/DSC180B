@@ -1,4 +1,6 @@
 {
     "scientific_path" : "src/data/scientific",
-    "misinformation_path" : "src/data/misinformation"
+    "misinformation_path" : "src/data/misinformation",
+    "scientific_list" : ["AOC", "BernieSanders", "lisamurkowski", "maziehirono", "RepAdamSchiff", "RepKatiePorter", "RepUnderwood", "SenatorRomney", "SenWarren", "tedlieu"],
+    "misinformation_list" : ["HawleyMO", "Jim_Jordan", "LindseyGrahamSC", "mattgaetz", "RandPaul", "replouiegohmert", "SenJoniErnst", "TulsiGabbard", "tedcruz", "RepAndyBiggsAZ"]
 }
