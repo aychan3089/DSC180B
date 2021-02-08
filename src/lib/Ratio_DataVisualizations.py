@@ -22,7 +22,7 @@ def ratio_means(lst):
     return means, names
 
 
-def scientific_ratios_graph(ratios_names):
+def scientific_ratios_graph(ratios_names, outpath):
     '''
     takes in tuple of lists
     * first list contains scientific ratios of politicians
@@ -39,10 +39,10 @@ def scientific_ratios_graph(ratios_names):
     plt.title('Scientific Ratios')
     plt.xlabel('Ratio')
     plt.ylabel('Politician')
-    plt.savefig('src/out/Scientific_Ratios.png', bbox_inches='tight')
+    plt.savefig(outpath, bbox_inches='tight')
     
     
-def misinfo_ratios_graph(ratios_names):
+def misinfo_ratios_graph(ratios_names, outpath):
     '''
     takes in tuple of lists
     * first list contains misinfo ratios of politicians
@@ -57,5 +57,5 @@ def misinfo_ratios_graph(ratios_names):
     plt.title('Misinformation Ratios')
     plt.xlabel('Ratio')
     plt.ylabel('Politician')
-    plt.savefig('src/out/Misinfo_Ratios.png', bbox_inches='tight')
+    plt.savefig(outpath, bbox_inches='tight')
 
