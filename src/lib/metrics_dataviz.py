@@ -25,7 +25,7 @@ def sci_likes_over_months(politicians, inpath, outpath, x_months):
         plt.ylabel('Number of Likes')
         plt.legend(politicians)
 
-    plt.savefig(outpath, bbox_inches='tight')
+    plt.savefig(outpath + '/scientific_likes_over_months.png', bbox_inches='tight')
     
     
     
@@ -48,7 +48,7 @@ def misinfo_likes_over_months(politicians, inpath, outpath, x_months):
         plt.ylabel('Number of Likes')
         plt.legend(politicians)
         
-    plt.savefig(outpath, bbox_inches='tight')
+    plt.savefig(outpath + '/misinfo_likes_over_months.png', bbox_inches='tight')
     
     
 def compare_sci_misinfo(politicians, sci_path, misinfo_path, outpath, x_months):
@@ -68,7 +68,7 @@ def compare_sci_misinfo(politicians, sci_path, misinfo_path, outpath, x_months):
     plt.ylabel('Max Number of Likes')
     plt.legend(politicians)
         
-    plt.savefig(outpath, bbox_inches='tight')
+    plt.savefig(outpath + '/compare_sci_misinfo.png', bbox_inches='tight')
     
     
 def max_all_sci(sci_path, outpath, x_months):
@@ -87,7 +87,7 @@ def max_all_sci(sci_path, outpath, x_months):
         plt.ylabel('Number of Likes')
         plt.legend(list(sci.keys()), bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
         
-    plt.savefig(outpath, bbox_inches='tight')
+    plt.savefig(outpath + '/max_all_sci.png', bbox_inches='tight')
 
     
 def max_all_misinfo(misinfo_path, outpath, x_months):
@@ -106,4 +106,4 @@ def max_all_misinfo(misinfo_path, outpath, x_months):
         plt.ylabel('Number of Likes')
         plt.legend(list(misinfo.keys()), bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
         
-    plt.savefig(outpath, bbox_inches='tight')
+    plt.savefig(outpath + '/max_all_misinfo.png', bbox_inches='tight')
