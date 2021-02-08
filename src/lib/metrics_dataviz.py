@@ -17,7 +17,7 @@ def sci_likes_over_months(politicians, inpath, outpath, x_months):
     
     plt.figure(figsize=(12, 5))
     for i in politicians:
-        plt.plot(list(avg_likes_over_months[i].keys())[100:], list(avg_likes_over_months[i].values())[100:])
+        plt.plot(list(avg_likes_over_months[i].keys()), list(avg_likes_over_months[i].values()))
         
         plt.title('Scientific Average likes Over 4 Months')
         plt.xlabel('Months')
@@ -41,7 +41,7 @@ def misinfo_likes_over_months(politicians, inpath, outpath, x_months):
     
     plt.figure(figsize=(12, 5))
     for i in politicians:
-        plt.plot(list(avg_likes_over_months[i].keys())[100:], list(avg_likes_over_months[i].values())[100:])
+        plt.plot(list(avg_likes_over_months[i].keys()), list(avg_likes_over_months[i].values()))
         
         plt.title('Misinfo Average likes Over 4 Months')
         plt.xlabel('Months')
@@ -61,8 +61,8 @@ def compare_sci_misinfo(politicians, sci_path, misinfo_path, outpath, x_months):
     misinfo = metrics.max_likes_over_months(misinfo_path, x_months)
     
     plt.figure(figsize=(12, 5))
-    plt.plot(list(sci[politicians[0]].keys())[100:], list(sci[politicians[0]].values())[100:])
-    plt.plot(list(misinfo[politicians[1]].keys())[100:], list(misinfo[politicians[1]].values())[100:])
+    plt.plot(list(sci[politicians[0]].keys()), list(sci[politicians[0]].values()))
+    plt.plot(list(misinfo[politicians[1]].keys()), list(misinfo[politicians[1]].values()))
 
     plt.title('Comparison of Scientific and Misinfo Max Likes Over 4 Months Window')
     plt.xlabel('Months')
@@ -82,7 +82,7 @@ def max_all_sci(sci_path, outpath, x_months):
 
     plt.figure(figsize=(20, 10))
     for i in list(sci.keys()):
-        plt.plot(list(sci[i].keys())[100:], list(sci[i].values())[100:])
+        plt.plot(list(sci[i].keys()), list(sci[i].values()))
         
         plt.title('Scientific Max Likes Over 4 Months')
         plt.xlabel('Months')
@@ -102,7 +102,7 @@ def max_all_misinfo(misinfo_path, outpath, x_months):
 
     plt.figure(figsize=(20, 10))
     for i in list(misinfo.keys()):
-        plt.plot(list(misinfo[i].keys())[100:], list(misinfo[i].values())[100:])
+        plt.plot(list(misinfo[i].keys()), list(misinfo[i].values()))
         
         plt.title('Misinformation Max Likes Over 4 Months')
         plt.xlabel('Months')
