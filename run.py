@@ -26,7 +26,7 @@ def main(targets):
 
         sci_likes_over_months(["User4", "User5", "User6"], data_cfg['test_scientific_path'], data_cfg['test_output_path'], 5)
         misinfo_likes_over_months(["User1", "User2", "User3"], data_cfg['test_misinformation_path'], data_cfg['test_output_path'], 5)
-        compare_sci_misinfo(["User1", "User4"], data_cfg['test_scientific_path'], data_cfg['test_misinformation_path'], data_cfg['test_output_path'], 5)
+        compare_sci_misinfo(["User4", "User1"], data_cfg['test_scientific_path'], data_cfg['test_misinformation_path'], data_cfg['test_output_path'], 5)
         max_all_sci(data_cfg['test_scientific_path'], data_cfg['test_output_path'], 5)
         max_all_misinfo(data_cfg['test_misinformation_path'], data_cfg['test_output_path'], 5)
 
