@@ -38,6 +38,10 @@ def count_likes_over_months(path):
                 for line in f.readlines():
                     tweet = json.loads(line)
 
+                    if tweet['full_text'][:2] == 'RT':
+                        # dont count a tweet if it is a retweet 
+                        continue
+
                     name = tweet['user']['name']
                     date = convert_date(tweet['created_at'])
                     likes = tweet['favorite_count']
@@ -130,6 +134,10 @@ def count_likes_over_tweets(path):
                 for line in f.readlines():
                     tweet = json.loads(line)
                     
+                    if tweet['full_text'][:2] == 'RT':
+                        # dont count a tweet if it is a retweet 
+                        continue
+
                     name = tweet['user']['name']
                     likes = tweet['favorite_count'] 
                     curr_num_tweets += 1
@@ -158,6 +166,10 @@ def avg_likes_over_tweets(path, x_tweets):
                 for line in f.readlines():
                     tweet = json.loads(line)
                     
+                    if tweet['full_text'][:2] == 'RT':
+                        # dont count a tweet if it is a retweet 
+                        continue
+
                     name = tweet['user']['name']
                     likes = tweet['favorite_count'] 
                     curr_num_tweets += 1
@@ -187,6 +199,10 @@ def max_likes_over_tweets(path, x_tweets):
             with open(filepath, encoding='utf-8') as f:
                 for line in f.readlines():
                     tweet = json.loads(line)
+                    
+                    if tweet['full_text'][:2] == 'RT':
+                        # dont count a tweet if it is a retweet 
+                        continue
                     
                     name = tweet['user']['name']
                     likes = tweet['favorite_count'] 
@@ -218,6 +234,10 @@ def cumu_likes_over_tweets(path):
                 for line in f.readlines():
                     tweet = json.loads(line)
                     
+                    if tweet['full_text'][:2] == 'RT':
+                        # dont count a tweet if it is a retweet 
+                        continue
+                        
                     name = tweet['user']['name']
                     likes = tweet['favorite_count'] 
                     curr_num_tweets += 1
