@@ -34,6 +34,9 @@ def count_likes_over_months(path):
         for file in files:
             filepath = os.path.join(subdir, file)
 
+            if not file.endswith('.jsonl'):
+                continue
+            
             with open(filepath, encoding='utf-8') as f:
                 for line in f.readlines():
                     tweet = json.loads(line)
@@ -126,6 +129,9 @@ def count_likes_over_tweets(path):
             filepath = os.path.join(subdir, file)
             curr_num_tweets = 0
             
+            if not file.endswith('.jsonl'):
+                continue
+            
             with open(filepath, encoding='utf-8') as f:
                 for line in f.readlines():
                     tweet = json.loads(line)
@@ -153,6 +159,9 @@ def avg_likes_over_tweets(path, x_tweets):
             filepath = os.path.join(subdir, file)
             curr_num_tweets = 0
             user_likes = []
+            
+            if not file.endswith('.jsonl'):
+                continue
             
             with open(filepath, encoding='utf-8') as f:
                 for line in f.readlines():
@@ -184,6 +193,9 @@ def max_likes_over_tweets(path, x_tweets):
             curr_num_tweets = 0
             user_likes = []
             
+            if not file.endswith('.jsonl'):
+                continue
+
             with open(filepath, encoding='utf-8') as f:
                 for line in f.readlines():
                     tweet = json.loads(line)
@@ -214,6 +226,9 @@ def cumu_likes_over_tweets(path):
             curr_num_tweets = 0
             total = 0
             
+            if not file.endswith('.jsonl'):
+                continue
+                
             with open(filepath, encoding='utf-8') as f:
                 for line in f.readlines():
                     tweet = json.loads(line)
