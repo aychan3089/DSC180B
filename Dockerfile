@@ -14,7 +14,7 @@ USER root
 
 # 3) install packages
 RUN pip install --upgrade pip
-RUN pip install --no-cache-dir Twarc tweepy 
+RUN pip install --no-cache-dir Twarc tweepy mlxtend
 
 # 4) change back to notebook user
 COPY /run_jupyter.sh /
