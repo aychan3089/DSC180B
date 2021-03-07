@@ -22,7 +22,7 @@ def make_months():
     return d
 
 
-def count_likes_over_months(path):
+def count_likes_over_months(inpath, outpath, category):
     '''
     takes in a datapath to the folder where politican's tweets are held in jsonl format
     returns a dictionary in the form of {name: {date: metric}}
@@ -30,7 +30,7 @@ def count_likes_over_months(path):
     '''
     likes_over_time = {}
 
-    for subdir, dirs, files in os.walk(path):
+    for subdir, dirs, files in os.walk(inpath):
         for file in files:
             filepath = os.path.join(subdir, file)
 
@@ -53,15 +53,43 @@ def count_likes_over_months(path):
                         likes_over_time[name] = make_months()
 
                     likes_over_time[name][date] += likes
-    return likes_over_time
+    
+    filepath = outpath + '/' + category + '_count_likes_over_months.json'
+    with open(filepath, 'w+') as f:
+        json.dump(likes_over_time, f)
 
-def avg_likes_over_months(path, x_months):
+def avg_likes_over_months(inpath, outpath, category, x_months):
     '''
     takes in a datapath to the folder where politican's tweets are held in jsonl format
     returns a dictionary in the form of {name: {date: metric}}
     metric is the average number of likes over the past x months
     '''
-    likes_over_time = count_likes_over_months(path)
+    likes_over_time = {}
+
+    for subdir, dirs, files in os.walk(inpath):
+        for file in files:
+            filepath = os.path.join(subdir, file)
+
+            if not file.endswith('.jsonl'):
+                continue
+            
+            with open(filepath, encoding='utf-8') as f:
+                for line in f.readlines():
+                    tweet = json.loads(line)
+
+                    if tweet['full_text'][:2] == 'RT':
+                        # dont count a tweet if it is a retweet 
+                        continue
+
+                    name = tweet['user']['name']
+                    date = convert_date(tweet['created_at'])
+                    likes = tweet['favorite_count']
+
+                    if name not in likes_over_time:
+                        likes_over_time[name] = make_months()
+
+                    likes_over_time[name][date] += likes
+    
     avg_likes_over_time = {}
     
     for name in likes_over_time:
@@ -75,15 +103,42 @@ def avg_likes_over_months(path, x_months):
             window = counts[max(i+1-x_months, 0): i+1]
             avg_likes_over_time[name][months[i]] = sum(window) // len(window)
     
-    return avg_likes_over_time
+    filepath = outpath + '/' + category + '_avg_likes_over_months.json'
+    with open(filepath, 'w+') as f:
+        json.dump(avg_likes_over_time, f)
 
-def max_likes_over_months(path, x_months):
+def max_likes_over_months(inpath, outpath, category, x_months):
     '''
     takes in a datapath to the folder where politican's tweets are held in jsonl format
     returns a dictionary in the form of {name: {date: metric}}
     metric is the max number of likes over the past x months
     '''
-    likes_over_time = count_likes_over_months(path)
+    likes_over_time = {}
+
+    for subdir, dirs, files in os.walk(inpath):
+        for file in files:
+            filepath = os.path.join(subdir, file)
+
+            if not file.endswith('.jsonl'):
+                continue
+            
+            with open(filepath, encoding='utf-8') as f:
+                for line in f.readlines():
+                    tweet = json.loads(line)
+
+                    if tweet['full_text'][:2] == 'RT':
+                        # dont count a tweet if it is a retweet 
+                        continue
+
+                    name = tweet['user']['name']
+                    date = convert_date(tweet['created_at'])
+                    likes = tweet['favorite_count']
+
+                    if name not in likes_over_time:
+                        likes_over_time[name] = make_months()
+
+                    likes_over_time[name][date] += likes
+                    
     max_likes_over_time = {}
     
     for name in likes_over_time:
@@ -97,15 +152,42 @@ def max_likes_over_months(path, x_months):
             window = counts[max(i+1-x_months, 0): i+1]
             max_likes_over_time[name][months[i]] = max(window)
     
-    return max_likes_over_time
+    filepath = outpath + '/' + category + '_max_likes_over_months.json'
+    with open(filepath, 'w+') as f:
+        json.dump(max_likes_over_time, f)
 
-def cumu_likes_over_months(path):
+def cumu_likes_over_months(inpath, outpath, category):
     '''
     takes in a datapath to the folder where politican's tweets are held in jsonl format
     returns a dictionary in the form of {name: {date: metric}}
     metric is the cumulative number of likes over all months
     '''
-    likes_over_time = count_likes_over_months(path)
+    likes_over_time = {}
+
+    for subdir, dirs, files in os.walk(inpath):
+        for file in files:
+            filepath = os.path.join(subdir, file)
+
+            if not file.endswith('.jsonl'):
+                continue
+            
+            with open(filepath, encoding='utf-8') as f:
+                for line in f.readlines():
+                    tweet = json.loads(line)
+
+                    if tweet['full_text'][:2] == 'RT':
+                        # dont count a tweet if it is a retweet 
+                        continue
+
+                    name = tweet['user']['name']
+                    date = convert_date(tweet['created_at'])
+                    likes = tweet['favorite_count']
+
+                    if name not in likes_over_time:
+                        likes_over_time[name] = make_months()
+
+                    likes_over_time[name][date] += likes
+    
     cumu_likes_over_time = {}
     
     for name in likes_over_time:
@@ -118,9 +200,11 @@ def cumu_likes_over_months(path):
             total += likes_over_time[name][date]
             cumu_likes_over_time[name][date] = total
     
-    return cumu_likes_over_time
+    filepath = outpath + '/' + category + '_cumu_likes_over_months.json'
+    with open(filepath, 'w+') as f:
+        json.dump(cumu_likes_over_time, f)
 
-def count_likes_over_tweets(path):
+def count_likes_over_tweets(inpath, outpath, category):
     '''
     takes in a datapath to the folder where politican's tweets are held in jsonl format
     returns a dictionary in the form of {name: {tweet_num: metric}}
@@ -128,7 +212,7 @@ def count_likes_over_tweets(path):
     '''
     likes_per_tweet = {}
     
-    for subdir, dis, files in os.walk(path):
+    for subdir, dis, files in os.walk(inpath):
         for file in files:
             filepath = os.path.join(subdir, file)
             curr_num_tweets = 0
@@ -152,9 +236,12 @@ def count_likes_over_tweets(path):
                         likes_per_tweet[name] = {}
                         
                     likes_per_tweet[name][curr_num_tweets] = likes
-    return likes_per_tweet
+    
+    filepath = outpath + '/' + category + '_count_likes_over_tweets.json'
+    with open(filepath, 'w+') as f:
+        json.dump(likes_per_tweet, f)
 
-def avg_likes_over_tweets(path, x_tweets):
+def avg_likes_over_tweets(inpath, outpath, category, x_tweets):
     '''
     takes in a datapath to the folder where politican's tweets are held in jsonl format
     returns a dictionary in the form of {name: {tweet_num: metric}}
@@ -162,7 +249,7 @@ def avg_likes_over_tweets(path, x_tweets):
     '''
     likes_per_tweet = {}
     
-    for subdir, dis, files in os.walk(path):
+    for subdir, dis, files in os.walk(inpath):
         for file in files:
             filepath = os.path.join(subdir, file)
             curr_num_tweets = 0
@@ -189,9 +276,12 @@ def avg_likes_over_tweets(path, x_tweets):
                     
                     user_likes = user_likes[-x_tweets:]
                     likes_per_tweet[name][curr_num_tweets] = sum(user_likes) // len(user_likes)
-    return likes_per_tweet
+    
+    filepath = outpath + '/' + category + '_avg_likes_over_tweets.json'
+    with open(filepath, 'w+') as f:
+        json.dump(likes_per_tweet, f)
 
-def max_likes_over_tweets(path, x_tweets):
+def max_likes_over_tweets(inpath, outpath, category, x_tweets):
     '''
     takes in a datapath to the folder where politican's tweets are held in jsonl format
     returns a dictionary in the form of {name: {tweet_num: metric}}
@@ -199,7 +289,7 @@ def max_likes_over_tweets(path, x_tweets):
     '''
     likes_per_tweet = {}
     
-    for subdir, dis, files in os.walk(path):
+    for subdir, dis, files in os.walk(inpath):
         for file in files:
             filepath = os.path.join(subdir, file)
             curr_num_tweets = 0
@@ -225,10 +315,13 @@ def max_likes_over_tweets(path, x_tweets):
                         likes_per_tweet[name] = {}
                     
                     user_likes = user_likes[-x_tweets:]
-                    likes_per_tweet[name][curr_num_tweets] = max(user_tweets)
-    return likes_per_tweet
+                    likes_per_tweet[name][curr_num_tweets] = max(user_likes)
+    
+    filepath = outpath + '/' + category + '_max_likes_over_tweets.json'
+    with open(filepath, 'w+') as f:
+        json.dump(likes_per_tweet, f)
 
-def cumu_likes_over_tweets(path):
+def cumu_likes_over_tweets(inpath, outpath, category):
     '''
     takes in a datapath to the folder where politican's tweets are held in jsonl format
     returns a dictionary in the form of {name: {tweet_num: metric}}
@@ -236,7 +329,7 @@ def cumu_likes_over_tweets(path):
     '''
     likes_per_tweet = {}
     
-    for subdir, dis, files in os.walk(path):
+    for subdir, dis, files in os.walk(inpath):
         for file in files:
             filepath = os.path.join(subdir, file)
             curr_num_tweets = 0
@@ -262,4 +355,7 @@ def cumu_likes_over_tweets(path):
                         likes_per_tweet[name] = {}
                     
                     likes_per_tweet[name][curr_num_tweets] = total
-    return likes_per_tweet
+    
+    filepath = outpath + '/' + category + '_cumu_likes_over_tweets.json'
+    with open(filepath, 'w+') as f:
+        json.dump(likes_per_tweet, f)

@@ -5,20 +5,22 @@ import os
 
 import config
 
-def get_metrics(politician_file, filepath):
-    
+def get_ratios(politician_file, filepath):
+    '''
+
+    '''
     working_path = os.getcwd()
     os.chdir(filepath)
     
     check = politician_file + '.csv'
     
-    #Checks to make sure the csv file does not already exist before calling on the API
+    # Checks to make sure the csv file does not already exist before calling on the API
     if check in os.listdir():
         print("The ratios for " + politician_list + " already exist.")
         os.chdir(working_path)
         return
     
-    #Opens the text file of tweet ids found in the filepath
+    # Opens the text file of tweet ids found in the filepath
     text_file = open(politician_file + ".txt", "r")
     lines = text_file.read().splitlines()
     text_file.close()
@@ -27,8 +29,8 @@ def get_metrics(politician_file, filepath):
     metrics_list = []
 
     for i in range(0, len(lines), 100):
-        #Gets 100 tweet ids at a time and passes it to the call to the API
-        #The API can only look up metrics for 100 tweets at a time
+        # Gets 100 tweet ids at a time and passes it to the call to the API
+        # The API can only look up metrics for 100 tweets at a time
         partition = lines[i:i+100]
         partition_string = ','.join(partition)
 
@@ -68,10 +70,12 @@ def get_metrics(politician_file, filepath):
     
     return ratios_table
 
-def get_csvs(scientific_path, misinformation_path, scientific_list, misinformation_list):
 
-    for i in range(len(scientific_list)):
-        get_metrics(scientific_list[i], scientific_path)
+def make_ratios(scientific_path, misinformation_path, scientific_politicians, misinformation_politicians):
+    '''
+    '''
+    for i in range(len(scientific_politicians)):
+        get_ratios(scientific_politicians[i], scientific_path)
 
-    for i in range(len(misinformation_list)):
-        get_metrics(misinformation_list[i], misinformation_path)
+    for i in range(len(misinformation_politicians)):
+        get_ratios(misinformation_politicians[i], misinformation_path)

@@ -1,63 +1,115 @@
 import pandas as pd
 import numpy as np
-import metrics
-import sort_tweets
+import json
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import figure
 
 
-def sci_likes_over_months(politicians, inpath, outpath, x_months):
+def sci_largest_ratio(politicians, inpath, outpath):
     """
     takes in list of names for politicians and creates line
     graph for their likes over months
     * takes politician with highest tweet ratio average and 
     lowest tweet ratio average from scientific group
     """
-    avg_likes_over_months = metrics.avg_likes_over_months(inpath, x_months)
-    
-    plt.figure(figsize=(12, 5))
-    for i in politicians:
-        plt.plot(list(avg_likes_over_months[i].keys()), list(avg_likes_over_months[i].values()))
-        
-        plt.title('Scientific Average likes Over 4 Months')
-        plt.xlabel('Months')
-        plt.xticks(rotation=90) 
-        plt.ylabel('Number of Likes')
-        plt.legend(politicians)
+    with open(inpath) as f:
+        data = json.load(f)
 
-    plt.savefig(outpath + '/scientific_likes_over_months.png', bbox_inches='tight')
+    plt.figure(figsize=(12, 5))
     
+    p1 = politicians[0]
+    x1 = list(data[p1].keys())[100:]
+    y1 = list(data[p1].values())[100:]
+    plt.plot(x1, y1, color = 'blue')
     
+    p2 = politicians[1]
+    x2 = list(data[p2].keys())[100:]
+    y2 = list(data[p2].values())[100:]
+    plt.plot(x2, y2, color = 'dodgerblue')
+        
+    plt.suptitle('Highest Ratio Politician vs Lowest Ratio Politician for Scientific Group')
+    plt.title('Rolling average of Tweet likes with 4 month window')
+    plt.xlabel('Months')
+    plt.xticks(rotation=90) 
+    plt.ylabel('Number of Likes')
+    plt.legend(politicians)
+
+    plt.savefig(outpath + '/sci_ratio_comparison.png', bbox_inches='tight')
     
-def misinfo_likes_over_months(politicians, inpath, outpath, x_months):
+def misinfo_largest_ratio(politicians, inpath, outpath):
     """
     takes in list of names for politicians and creates line
     graph for their likes over months
     * takes politician with highest tweet ratio average and 
     lowest tweet ratio average from misinfo group
     """
-    avg_likes_over_months = metrics.avg_likes_over_months(inpath, x_months)
+    with open(inpath) as f:
+        avg_likes_over_months = json.load(f)
     
     plt.figure(figsize=(12, 5))
-    for i in politicians:
-        plt.plot(list(avg_likes_over_months[i].keys()), list(avg_likes_over_months[i].values()))
-        
-        plt.title('Misinfo Average likes Over 4 Months')
-        plt.xlabel('Months')
-        plt.xticks(rotation=90) 
-        plt.ylabel('Number of Likes')
-        plt.legend(politicians)
-        
-    plt.savefig(outpath + '/misinfo_likes_over_months.png', bbox_inches='tight')
+
+    p1 = politicians[0]
+    x1 = list(data[p1].keys())[100:]
+    y1 = list(data[p1].values())[100:]
+    plt.plot(x1, y1, color = 'orange')
     
+    p2 = politicians[1]
+    x2 = list(data[p2].keys())[100:]
+    y2 = list(data[p2].values())[100:]
+    plt.plot(x2, y2, color = 'orangered')
+        
+    plt.suptitle('Highest Ratio Politician vs Lowest Ratio Politician for Misinformation Group')
+    plt.title('Rolling average of Tweet likes with 4 month window')
+    plt.xlabel('Months')
+    plt.xticks(rotation=90) 
+    plt.ylabel('Number of Likes')
+    plt.legend(lst)
+        
+    plt.savefig(outpath + '/misinfo_ratio_comparison.png', bbox_inches='tight')
     
-def compare_sci_misinfo(politicians, sci_path, misinfo_path, outpath, x_months):
+def both_largest_ratio(politicians, sci_inpath, misinfo_inpath, outpath):
+    """
+    takes in list of names for politicians and creates line
+    graph for their likes over months
+    * takes politicians with highest tweet ratio average from both groups 
+    """
+    with open(sci_inpath) as f:
+        sci_data = json.load(f)
+    
+    plt.figure(figsize=(12, 5))
+    p1 = politicians[0]
+    x1 = list(sci_data[p1].keys())[100:]
+    y1 = list(sci_data[p1].values())[100:]
+    plt.plot(x1, y1, color = 'blue')
+    
+    with open(misinfo_inpath) as f:
+        misinfo_data = json.load(f)
+    
+    p2 = politicians[1]
+    x2 = list(misinfo_data[p2].keys())[100:]
+    y2 = list(misinfo_data[p2].values())[100:]
+    plt.plot(x2, y2, color = 'orange')
+        
+    plt.suptitle('Highest Ratio Politicians from Scientific and Misinformation Groups')
+    plt.title('Rolling average of Tweet likes with 4 month window')
+    plt.xlabel('Months')
+    plt.xticks(rotation=90) 
+    plt.ylabel('Number of Likes')
+    plt.legend(lst)
+        
+    plt.savefig(outpath + '/both_ratio_comparison.png', bbox_inches='tight')
+
+
+def compare_sci_misinfo(politicians, sci_path, misinfo_path, outpath):
     """
     Compares 1 politician from each group
     """
-    sci = metrics.max_likes_over_months(sci_path, x_months)
-    misinfo = metrics.max_likes_over_months(misinfo_path, x_months)
-    
+    with open(sci_path) as f:
+        sci = json.load(f)
+
+    with open(misinfo_path) as f:
+        misinfo = json.load(f)
+
     plt.figure(figsize=(12, 5))
     plt.plot(list(sci[politicians[0]].keys()), list(sci[politicians[0]].values()))
     plt.plot(list(misinfo[politicians[1]].keys()), list(misinfo[politicians[1]].values()))
@@ -67,15 +119,16 @@ def compare_sci_misinfo(politicians, sci_path, misinfo_path, outpath, x_months):
     plt.xticks(rotation=90) 
     plt.ylabel('Max Number of Likes')
     plt.legend(politicians)
-        
+    
     plt.savefig(outpath + '/compare_sci_misinfo.png', bbox_inches='tight')
     
     
-def max_all_sci(sci_path, outpath, x_months):
+def max_all_sci(sci_path, outpath):
     """
     returns max likes for all scientific politicians
     """
-    sci = metrics.max_likes_over_months(sci_path, x_months)
+    with open(sci_path) as f:
+        sci = json.load(f)
 
     plt.figure(figsize=(20, 10))
     for i in list(sci.keys()):
@@ -90,11 +143,12 @@ def max_all_sci(sci_path, outpath, x_months):
     plt.savefig(outpath + '/max_all_sci.png', bbox_inches='tight')
 
     
-def max_all_misinfo(misinfo_path, outpath, x_months):
+def max_all_misinfo(misinfo_path, outpath):
     """
     returns max likes for all misinfo politicians
     """
-    misinfo = metrics.max_likes_over_months(misinfo_path, x_months)
+    with open(misinfo_path) as f:
+        misinfo = json.load(f)
 
     plt.figure(figsize=(20, 10))
     for i in list(misinfo.keys()):
