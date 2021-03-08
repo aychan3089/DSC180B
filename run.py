@@ -9,6 +9,7 @@ sys.path.insert(0, 'src/lib')
 from metrics import * 
 from metrics_dataviz import *
 from sort_tweets import sort_files
+from permutation_tests import run_permutations
 
 def main(targets):
     all_flag = False
@@ -60,7 +61,13 @@ def main(targets):
         max_likes_over_tweets(misinfo_sort_path, outpath, 'misinfo', x_tweets)
 
         cumu_likes_over_tweets(sci_sort_path, outpath, 'scientific')
-        cumu_likes_over_tweets(misinfo_sort_path, outpath, 'misinfo')
+        cumu_likes_over_tweets(misinfo_path, outpath, 'misinfo')
+
+        group_likes_over_years(sci_path, outpath, 'scientific')
+        group_likes_over_years(misinfo_path, outpath, 'misinfo')
+
+        group_likes_over_months(sci_path, outpath, 'scientific')
+        group_likes_over_months(misinfo_path, outpath, 'misinfo')
 
     if 'visualization' in targets or all_flag:
         scientific_ratios_graph(data_cfg['scientific_path'], data_cfg['output_path'], data_cfg['scientific_politicians'])
@@ -80,9 +87,22 @@ def main(targets):
 
         most_tweets_comparison(['Alexandria Ocasio-Cortez', 'Rep. Jim Jordan'], sci_avg_likes_tweets_path, mis_avg_likes_tweets_path, outpath)
         
+        sci_group_likes_year_path = outpath + '/scientific_group_likes_over_years.json'
+        mis_group_likes_year_path = outpath + '/misinfo_group_likes_over_years.json'
+        group_sum_over_year(sci_group_likes_year_path, mis_group_likes_year_path, outpath)
+
+        normalized_group_sum_over_year(sci_group_likes_year_path, mis_group_likes_year_path, outpath)
+
+        sci_group_likes_months_path = outpath + '/scientific_group_likes_over_months.json'
+        mis_group_likes_months_path = outpath + '/misinfo_group_likes_over_months.json'
+        group_median_over_month(sci_group_likes_months_path, mis_group_likes_months_path, outpath)
 
     if 'permute' in targets or all_flag:
-        pass
+        outpath = data_cfg['output_path']
+        sci_path = outpath + '/scientific_group_likes_over_years.json'
+        mis_path = outpath + '/misinfo_group_likes_over_years.json'
+
+        run_permutations(sci_path, mis_path, outpath)
 
 
     if 'test' in targets: 

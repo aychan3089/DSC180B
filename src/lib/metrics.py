@@ -21,6 +21,11 @@ def make_months():
             d[str(month_num) + '.' + str(year_num)] = 0
     return d
 
+def make_years():
+    '''
+    creates dictionary of all years from 2008 to 2020
+    '''
+    return {str(year):[] for year in range(2008, 2021)}
 
 def count_likes_over_months(inpath, outpath, category):
     '''
@@ -359,3 +364,67 @@ def cumu_likes_over_tweets(inpath, outpath, category):
     filepath = outpath + '/' + category + '_cumu_likes_over_tweets.json'
     with open(filepath, 'w+') as f:
         json.dump(likes_per_tweet, f)
+
+def group_likes_over_years(inpath, outpath, category):
+    '''
+    creates {year: [likes]} to be used for permutation tests 
+    '''
+    likes_over_years = make_years()
+
+    for subdir, dirs, files in os.walk(inpath):
+        for file in files:
+            filepath = os.path.join(subdir, file)
+            
+            if not file.endswith('.jsonl'):
+                continue 
+
+            with open(filepath, encoding='utf-8') as f:
+                for line in f.readlines():
+                    tweet = json.loads(line)
+
+                    if tweet['full_text'][:2] == 'RT':
+                        # dont count a tweet if it is a retweet 
+                        continue 
+                    
+                    year = tweet['created_at'].split()[-1]
+                    likes = tweet['favorite_count']
+                    
+                    if likes > 0:
+                        likes_over_years[year].append(likes)
+                        
+    filepath = outpath + '/' + category + '_group_likes_over_years.json'
+    with open(filepath, 'w+') as f:
+        json.dump(likes_over_years, f)
+
+def group_likes_over_months(inpath, outpath, category):
+    '''
+    creates {month: [likes]}  
+    '''
+    likes_over_months = make_months()
+    for i in likes_over_months:
+        likes_over_months[i] = []
+    
+    
+    for subdir, dirs, files in os.walk(inpath):
+        for file in files:
+            filepath = os.path.join(subdir, file)
+            
+            if not file.endswith('.jsonl'):
+                continue
+                
+            with open(filepath, encoding='utf-8') as f:
+                for line in f.readlines():
+                    tweet = json.loads(line)
+                    
+                    if tweet['full_text'][:2] == 'RT':
+                        # dont count a tweet if it is a retweet 
+                        continue
+                        
+                    date = convert_date(tweet['created_at'])
+                    likes = tweet['favorite_count']
+
+                    likes_over_months[date].append(likes)
+                    
+    filepath = outpath + '/' + category + '_group_likes_over_months.json'
+    with open(filepath, 'w+') as f:
+        json.dump(likes_over_months, f)
