@@ -5,7 +5,8 @@ import json
 sys.path.insert(0, 'src/lib')
 
 from data import get_data
-from ratio import get_csvs
+from data import get_csvs
+from ratio import get_ratio_csv
 from metrics_dataviz import *
 
 def main(targets):
@@ -14,11 +15,12 @@ def main(targets):
         with open('config/data-params.json') as fh:
             data_cfg = json.load(fh)
         get_data(**data_cfg)
+        get_csvs(**data_cfg)
 
     if 'ratio' in targets:
         with open('config/data-params.json') as fh:
             data_cfg = json.load(fh)
-        get_csvs(**data_cfg)
+        get_ratio_csv(**data_cfg)
 
     if 'test' in targets: 
         with open('config/data-params.json') as fh:
