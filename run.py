@@ -4,12 +4,12 @@ import json
 
 sys.path.insert(0, 'src/lib')
 
-#from data import get_data
-#from ratio import make_ratios
-from metrics import * 
-from metrics_dataviz import *
-from sort_tweets import sort_files
-from permutation_tests import run_permutations
+from data import get_data, get_csvs
+from ratio import get_ratio_csv
+#from metrics import * 
+#from metrics_dataviz import *
+#from sort_tweets import sort_files
+#from permutation_tests import run_permutations
 
 def main(targets):
     all_flag = False
@@ -22,9 +22,11 @@ def main(targets):
 
     if 'data' in targets or all_flag:
         get_data(data_cfg['scientific_path'], data_cfg['misinformation_path'])
+        get_csvs(data_cfg['scientific_path'], data_cfg['misinformation_path'], 
+                    data_cfg['scientific_politicians'], data_cfg['misinformation_politicians'])
 
     if 'ratio' in targets or all_flag:
-        make_ratios(data_cfg['scientific_path'], data_cfg['misinformation_path'], 
+        get_ratio_csv(data_cfg['scientific_path'], data_cfg['misinformation_path'], 
                     data_cfg['scientific_politicians'], data_cfg['misinformation_politicians'])
 
     if 'metrics' in targets or all_flag:
