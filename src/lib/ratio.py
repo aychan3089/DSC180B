@@ -7,7 +7,7 @@ import config
 
 def get_ratios(politician_file, filepath):
     '''
-
+    creates a csv of ratios for 
     '''
     working_path = os.getcwd()
     os.chdir(filepath)
@@ -73,6 +73,7 @@ def get_ratios(politician_file, filepath):
 
 def make_ratios(scientific_path, misinformation_path, scientific_politicians, misinformation_politicians):
     '''
+    set up for creating ratios csvs from the tweet ids 
     '''
     for i in range(len(scientific_politicians)):
         get_ratios(scientific_politicians[i], scientific_path)

@@ -4,9 +4,11 @@ import json
 
 sys.path.insert(0, 'src/lib')
 
-from data import get_data
-from ratio import make_ratios
+#from data import get_data
+#from ratio import make_ratios
+from metrics import * 
 from metrics_dataviz import *
+from sort_tweets import sort_files
 
 def main(targets):
     all_flag = False
@@ -63,9 +65,9 @@ def main(targets):
     if 'visualization' in targets or all_flag:
         scientific_ratios_graph(data_cfg['scientific_path'], data_cfg['output_path'], data_cfg['scientific_politicians'])
         misinfo_ratios_graph(data_cfg['misinformation_path'], data_cfg['output_path'], data_cfg['misinformation_politicians'])
-
-        sci_avg_likes_time_path = outpath + 'scientific_avg_likes_over_months.json'
-        mis_avg_likes_time_path = outpath + 'misinfo_avg_likes_over_months.json'
+        outpath = data_cfg['output_path']
+        sci_avg_likes_time_path = outpath + '/scientific_avg_likes_over_months.json'
+        mis_avg_likes_time_path = outpath + '/misinfo_avg_likes_over_months.json'
 
         sci_largest_ratio(['Sen. Lisa Murkowski', 'Rep. Katie Porter'], sci_avg_likes_time_path, outpath)
         misinfo_largest_ratio(['Lindsey Graham', 'Tulsi Gabbard 🌺'], mis_avg_likes_time_path, outpath)
@@ -73,8 +75,8 @@ def main(targets):
 
         most_likes_comparison(['Alexandria Ocasio-Cortez', 'Rep. Jim Jordan'], sci_avg_likes_time_path, mis_avg_likes_time_path, outpath)
         
-        sci_avg_likes_tweets_path = outpath + 'scientific_avg_likes_over_tweets.json'
-        mis_avg_likes_tweets_path = outpath + 'misinfo_avg_likes_over_tweets.json'
+        sci_avg_likes_tweets_path = outpath + '/scientific_avg_likes_over_tweets.json'
+        mis_avg_likes_tweets_path = outpath + '/misinfo_avg_likes_over_tweets.json'
 
         most_tweets_comparison(['Alexandria Ocasio-Cortez', 'Rep. Jim Jordan'], sci_avg_likes_tweets_path, mis_avg_likes_tweets_path, outpath)
         

@@ -32,9 +32,16 @@ def rehydrate(directory_path):
     #Changes the directory to the original path
     os.chdir(cwd)
         
+
+def make_csv()
+
+
 def get_data(scientific_path, misinformation_path):
     '''
     setup for rehyrating tweets for both our scientific and misinformation groups
     '''
     rehydrate(scientific_path)
     rehydrate(misinformation_path)
+
+    make_csv(scientific_path)
+    make_csv(misinformation_path)

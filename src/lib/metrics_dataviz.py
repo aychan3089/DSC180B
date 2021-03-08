@@ -1,5 +1,3 @@
-import pandas as pd
-import numpy as np
 import json
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import figure
@@ -44,7 +42,7 @@ def misinfo_largest_ratio(politicians, inpath, outpath):
     lowest tweet ratio average from misinfo group
     """
     with open(inpath) as f:
-        avg_likes_over_months = json.load(f)
+        data = json.load(f)
     
     plt.figure(figsize=(12, 5))
 
@@ -63,7 +61,7 @@ def misinfo_largest_ratio(politicians, inpath, outpath):
     plt.xlabel('Months')
     plt.xticks(rotation=90) 
     plt.ylabel('Number of Likes')
-    plt.legend(lst)
+    plt.legend(politicians)
         
     plt.savefig(outpath + '/misinfo_ratio_comparison.png', bbox_inches='tight')
     
@@ -95,7 +93,7 @@ def both_largest_ratio(politicians, sci_inpath, misinfo_inpath, outpath):
     plt.xlabel('Months')
     plt.xticks(rotation=90) 
     plt.ylabel('Number of Likes')
-    plt.legend(lst)
+    plt.legend(politicians)
         
     plt.savefig(outpath + '/both_ratio_comparison.png', bbox_inches='tight')
 
@@ -143,22 +141,23 @@ def most_tweets_comparison(politicians, sci_inpath, misinfo_inpath, outpath):
     plt.figure(figsize=(12, 5))
     
     p1 = politicians[0]
-    x1 = list(sci_data[p1].keys())[100:-7]
-    y1 = list(sci_data[p1].values())[100:-7]
+    x1 = list(sci_data[p1].keys())
+    y1 = list(sci_data[p1].values())
     plt.plot(x1, y1, color = 'blue')
     
     with open(misinfo_inpath) as f:
         misinfo_data = json.load(f)
     
     p2 = politicians[1]
-    x2 = list(misinfo_data[p2].keys())[100:-7]
-    y2 = list(misinfo_data[p2].values())[100:-7]
+    x2 = list(misinfo_data[p2].keys())
+    y2 = list(misinfo_data[p2].values())
     plt.plot(x2, y2, color = 'orangered')
     
     plt.suptitle('Highest Number of User Tweets from Scientitic and Misinformation Groups')
     plt.title('Rolling average of Tweet likes over last 200 Tweets')
     plt.xlabel('Number of Tweets')
     plt.xticks(rotation=90) 
+    plt.xticks(range(0,4001,1000))
     plt.ylabel('Average Number of Likes')
     plt.legend(politicians)
  
