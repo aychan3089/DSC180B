@@ -70,6 +70,13 @@ def main(targets):
         sci_largest_ratio(['Sen. Lisa Murkowski', 'Rep. Katie Porter'], sci_avg_likes_time_path, outpath)
         misinfo_largest_ratio(['Lindsey Graham', 'Tulsi Gabbard 🌺'], mis_avg_likes_time_path, outpath)
         both_largest_ratio(['Sen. Lisa Murkowski', 'Lindsey Graham'], sci_avg_likes_time_path, mis_avg_likes_time_path, outpath)
+
+        most_likes_comparison(['Alexandria Ocasio-Cortez', 'Rep. Jim Jordan'], sci_avg_likes_time_path, mis_avg_likes_time_path, outpath)
+        
+        sci_avg_likes_tweets_path = outpath + 'scientific_avg_likes_over_tweets.json'
+        mis_avg_likes_tweets_path = outpath + 'misinfo_avg_likes_over_tweets.json'
+
+        most_tweets_comparison(['Alexandria Ocasio-Cortez', 'Rep. Jim Jordan'], sci_avg_likes_tweets_path, mis_avg_likes_tweets_path, outpath)
         
 
     if 'permute' in targets or all_flag:
