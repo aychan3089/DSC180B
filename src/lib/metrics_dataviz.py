@@ -262,6 +262,50 @@ def group_median_over_month(sci_inpath, misinfo_inpath, outpath):
     plt.savefig(outpath + '/both_group_median_over_month.png', bbox_inches='tight')
 
 
+def sci_likes_over_months(politicians, inpath, outpath):
+    """
+    takes in list of names for politicians and creates line
+    graph for their likes over months
+    * takes politician with highest tweet ratio average and 
+    lowest tweet ratio average from scientific group
+    """
+    with open(inpath) as f:
+        avg_likes_over_months = json.load(f)
+    
+    plt.figure(figsize=(12, 5))
+    for i in politicians:
+        plt.plot(list(avg_likes_over_months[i].keys()), list(avg_likes_over_months[i].values()))
+        
+        plt.title('Scientific Average likes Over 4 Months')
+        plt.xlabel('Months')
+        plt.xticks(rotation=90) 
+        plt.ylabel('Number of Likes')
+        plt.legend(politicians)
+
+    plt.savefig(outpath + '/scientific_likes_over_months.png', bbox_inches='tight')
+
+def misinfo_likes_over_months(politicians, inpath, outpath):
+    """
+    takes in list of names for politicians and creates line
+    graph for their likes over months
+    * takes politician with highest tweet ratio average and 
+    lowest tweet ratio average from misinfo group
+    """
+    with open(inpath) as f:
+        avg_likes_over_months = json.load(f)
+    
+    plt.figure(figsize=(12, 5))
+    for i in politicians:
+        plt.plot(list(avg_likes_over_months[i].keys()), list(avg_likes_over_months[i].values()))
+        
+        plt.title('Misinfo Average likes Over 4 Months')
+        plt.xlabel('Months')
+        plt.xticks(rotation=90) 
+        plt.ylabel('Number of Likes')
+        plt.legend(politicians)
+        
+    plt.savefig(outpath + '/misinfo_likes_over_months.png', bbox_inches='tight')
+
 def compare_sci_misinfo(politicians, sci_path, misinfo_path, outpath):
     """
     Compares 1 politician from each group

@@ -4,12 +4,12 @@ import json
 
 sys.path.insert(0, 'src/lib')
 
-from data import get_data, get_csvs
-from ratio import get_ratio_csv
+#from data import get_data, get_csvs
+#from ratio import get_ratio_csv
 from metrics import * 
 from metrics_dataviz import *
-from sort_tweets import sort_files
-from permutation_tests import run_permutations
+#from sort_tweets import sort_files
+#from permutation_tests import run_permutations
 
 def main(targets):
     all_flag = False
@@ -108,11 +108,23 @@ def main(targets):
 
 
     if 'test' in targets: 
-        sci_likes_over_months(["User4", "User5", "User6"], data_cfg['test_scientific_path'], data_cfg['test_output_path'], 5)
-        misinfo_likes_over_months(["User1", "User2", "User3"], data_cfg['test_misinformation_path'], data_cfg['test_output_path'], 5)
-        compare_sci_misinfo(["User4", "User1"], data_cfg['test_scientific_path'], data_cfg['test_misinformation_path'], data_cfg['test_output_path'], 5)
-        max_all_sci(data_cfg['test_scientific_path'], data_cfg['test_output_path'], 5)
-        max_all_misinfo(data_cfg['test_misinformation_path'], data_cfg['test_output_path'], 5)
+        test_output = data_cfg['test_output_path']
+
+        avg_likes_over_months(data_cfg['test_scientific_path'], test_output, 'scientific', 5)
+        avg_likes_over_months(data_cfg['test_misinformation_path'], test_output, 'misinfo', 5)
+        max_likes_over_months(data_cfg['test_scientific_path'], test_output, 'scientific', 5)
+        max_likes_over_months(data_cfg['test_misinformation_path'], test_output, 'misinfo', 5)
+
+        test_sci_avg_likes_over_months_path = test_output + '/scientific_avg_likes_over_months.json'
+        test_mis_avg_likes_over_months_path = test_output + '/misinfo_avg_likes_over_months.json'
+        test_sci_max_likes_over_months_path = test_output + '/scientific_max_likes_over_months.json'
+        test_mis_max_likes_over_months_path = test_output + '/misinfo_max_likes_over_months.json'
+
+        sci_likes_over_months(["User4", "User5", "User6"], test_sci_avg_likes_over_months_path, test_output)
+        misinfo_likes_over_months(["User1", "User2", "User3"], test_mis_avg_likes_over_months_path, test_output)
+        compare_sci_misinfo(["User4", "User1"], test_sci_max_likes_over_months_path, test_mis_max_likes_over_months_path, test_output)
+        max_all_sci(test_sci_max_likes_over_months_path, test_output)
+        max_all_misinfo(test_mis_max_likes_over_months_path, test_output)
 
 if __name__ == '__main__':
     targets = sys.argv[1:]
