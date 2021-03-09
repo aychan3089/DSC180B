@@ -10,7 +10,7 @@ def ratio_means(inpath, users):
     '''
     means = []
     for user in users:
-        filename = user + '.csv'
+        filename = inpath + '/' + user + '.csv'
         df = pd.read_csv(filename, index_col=0)
         
         # remove ratio rows with 0 (no engagement for that tweet/retweet)
