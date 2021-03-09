@@ -4,14 +4,17 @@ import json
 
 sys.path.insert(0, 'src/lib')
 
-#from data import get_data, get_csvs
-#from ratio import get_ratio_csv
+from data import get_data, get_csvs
+from ratio import get_ratio_csv
 from metrics import * 
 from metrics_dataviz import *
-#from sort_tweets import sort_files
-#from permutation_tests import run_permutations
+from sort_tweets import sort_files
+from permutation_tests import run_permutations
 
 def main(targets):
+    '''
+    driver method for running through targets to recreate our project
+    '''
     all_flag = False
 
     with open('config/data-params.json') as fh:
