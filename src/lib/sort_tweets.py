@@ -26,6 +26,9 @@ def sort_files(path):
             if 'sorted' in filepath:
                 continue
             
+            if not file.endswith('.jsonl'):
+                continue 
+                
             tweets = []
             
             with open(filepath, encoding='utf-8') as f:

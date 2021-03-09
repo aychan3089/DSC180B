@@ -3,41 +3,6 @@ import json
 import numpy as np 
 from mlxtend.evaluate import permutation_test
 
-def make_years():
-    return {str(year):[] for year in range(2008, 2021)}
-
-def group_likes_over_years(path, user=None):
-    '''
-    creates {year: [likes]} to be used for permutation tests 
-    '''
-    likes_over_years = make_years()
-
-    for subdir, dirs, files in os.walk(path):
-        for file in files:
-            filepath = os.path.join(subdir, file)
-            
-            if not file.endswith('.jsonl'):
-                continue
-
-            with open(filepath, encoding='utf-8') as f:
-                for line in f.readlines():
-                    tweet = json.loads(line)
-                    
-                    if user and user tweet['user'] != user:
-                        # dont count tweet if user is not user we want 
-                        continue 
-                    
-                    if tweet['full_text'][:2] == 'RT':
-                        # dont count a tweet if it is a retweet 
-                        continue 
-                    
-                    year = tweet['created_at'].split()[-1]
-                    likes = tweet['favorite_count']
-                    
-                    if likes > 0:
-                        likes_over_years[year].append(likes)
-    return likes_over_years
-
 def normalize_likes(likes_over_years):
     '''
     normalize likes over current year using (curr_year_likes - mean_lastyear_likes) / mean_last_year_likes
@@ -65,7 +30,7 @@ def run_permutation_between(dist1, dist2, outpath):
                                    seed=42)
         s += 'Scientific vs Misinformation permutation test for year '+ year + ': the p-value is  ' + str(p_value) + '.\n'
     
-    with open(outpath, 'w+') as f:
+    with open(outpath + '/permutation_between.txt', 'w+') as f:
         f.write(s)
 
 def run_permutation_within(dist, category, outpath): 
@@ -82,5 +47,22 @@ def run_permutation_within(dist, category, outpath):
                                    seed=42)
         s += '{0} {1} vs {0} {2} permutation test: the p-value is {3}. \n'.format(category, years[i], years[i+1], p_value)
     
-    with open(outpath, 'w+') as f:
+    with open(outpath + '/' + category + '_permutation_within.txt', 'w+') as f:
         f.write(s)
+
+def run_permutations(sci_inpath, misinfo_inpath, outpath):
+    '''
+    runs all permutation tests 
+    '''
+    with open(sci_inpath) as f:
+        sci_data = json.load(f)
+    with open(misinfo_inpath) as f:
+        mis_data = json.load(f)
+    
+    sci_normal = normalize_likes(sci_data)
+    mis_normal = normalize_likes(mis_data)
+    
+    run_permutation_within(sci_normal, 'Scientific', outpath)
+    run_permutation_within(mis_normal, 'Misinformation', outpath)
+    
+    run_permutation_between(sci_normal, mis_normal, outpath)
