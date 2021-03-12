@@ -25,5 +25,20 @@
     * The politicians to analyze can be specified in `config/data-params.json`.
     * Output is an updated csv file for each politician containing the engagement metrics of their tweets and their ratio values.
 
+- To calculate the popularity estimate metrics, from the projecy root directory, run `python run.py metrics`
+    * This will create a JSON file for each estimate metric you wish to analyze. 
+    * The outputs are stored in `src/out`.
+    * These JSON files will then be used to create visualizations using the visualization target.
+
+- To create the visualizations, from the project root directory, run `python run.py visualization`
+    * This creates visualizations from the JSON files created from the metrics target.
+    * The outputs are stored in `src/out`.
+
+- To run the permutation test on our groups, from the project root directory, run `python run.py permute`
+    * This will run a permutation test within our two groups as well as between our groups.
+    * The outputs are stored in `src/out`.
+
+- To run all of the above targets, from the project root directory, run `python run.py all`
+
 - To run the test target, from the project root directory, run `python run.py test`
     * This runs most of the above targets on a small, fake dataset.
